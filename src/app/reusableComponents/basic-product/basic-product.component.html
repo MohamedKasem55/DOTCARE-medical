@@ -1,0 +1,101 @@
+<div class="pt-4">
+    <div style="margin-bottom:30px;display:flex; flex-direction:row;width: 100%;border-bottom: lightgray solid 2px; padding-bottom: 10px;">
+        <i style="color: rgb(57,231,237); font-size: xx-large;" class="fa fa-paste"></i>
+        <h6 style="font-weight: bolder; vertical-align: middle;margin-left: 8px;margin-top: 12px;">Basic Information
+        </h6>
+    </div>
+    <form [formGroup]="searchProductForm" (ngSubmit)="submitForm()">
+        <div class="row">
+            <div class="col-3">
+                <label for="warehouse" style="font-weight: 500; color: rgb(3,87,168);" class=" form-label">warehouse
+                    <span style="color: red;">*</span> </label>
+                <select required (change)="getTypes()" formControlName="productWareHouse"
+                    aria-label="Default select example" type="text" style="color: grey;"
+                    class="form-control form-select" id="warehouse">
+                    <option value="" disabled [selected]="true" hidden>
+                        Select Warehouse
+                    </option>
+                    <option value="Cairo">
+                        <div>Cairo</div>
+                    </option>
+                    <option value="Alexandria">
+                        <div>Alexandria</div>
+                    </option>
+                </select>
+
+            </div>
+            <div style="margin-left: 10%;" class="col-3">
+                <label for="type" style="font-weight: 500;color:rgb(3,87,168) " class=" form-label">Type
+                    <span style="color: red">*</span> </label>
+                <select (change)="getProductsNames()"
+                    [attr.disabled]="searchProductForm.get('productWareHouse').invalid?'':null"
+                    formControlName="productType" aria-label="Default select example" type="text" style="color: grey;"
+                    class="form-control form-select" id="type">
+                    <option [value]="" disabled [selected]="true" hidden>Select UOM Type</option>
+                    <option *ngFor="let product of searchedProducts" [value]="product.type">
+                        {{product.type}}
+                    </option>
+                </select>
+
+            </div>
+            <div class="col-3" style="margin:40px 0px 0px 130px;">
+                <input type="checkbox" id="" formControlName="zeroBalance">
+                <span style="margin-left: 8px;color:rgb(3,87,168)">Show Zero Balance</span>
+            </div>
+        </div>
+        <div class="row mt-5">
+            <div class="col-4">
+                <label style="font-weight: 500; color: rgb(3,87,168);" class=" form-label">Product
+                    Classification </label>
+                <div class="row">
+                    <div class="form-check col-6">
+                        <input [attr.checked]="!specific?'':null||!searchProductForm.get('productType').valid?'':null"
+                            [attr.disabled]="!searchProductForm.get('productType').valid?'':null" value="All Products"
+                            (change)='getProductClassification($event.target.value)' class="form-check-input"
+                            type="radio" id='allproducts' name="productClassification" id="flexRadioDefault1">
+                        <label class="form-check-label text-secondary" for="flexRadioDefault1">
+                            All Products
+                        </label>
+                    </div>
+                    <div class="form-check col-6">
+                        <input [checked]="specific"
+                            [attr.disabled]="!searchProductForm.get('productType').valid?'':null"
+                            value="Specific Product" (change)='getProductClassification($event.target.value)'
+                            class="form-check-input" type="radio" name="productClassification" id="flexRadioDefault2">
+                        <label class="form-check-label text-secondary" for="flexRadioDefault2">
+                            Specific Product
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="col-4" *ngIf="specific">
+                <label for="type" style="font-weight: 500;color:rgb(3,87,168) " class=" form-label">Product
+                    <span style="color: red">*</span> </label>
+                <select [attr.disabled]="searchProductForm.get('productWareHouse').invalid?'':null"
+                    formControlName="productName" aria-label="Default select example" type="text" style="color: grey;"
+                    class="form-control form-select" id="type">
+                    <option [value]="" disabled [selected]="true" hidden></option>
+                    <option *ngFor="let product of searchedProducts" [value]="product.name">
+                        {{product.name}}
+                    </option>
+                </select>
+            </div>
+            <div class="col-4"></div>
+        </div>
+
+        <div class="d-flex flex-row-reverse ">
+            <div style="align-self: flex-end;margin-right: 50px;"> <input type="submit" [disabled]="searchProductForm.invalid"
+                    style="color: white;border:none; border-radius:5px;width: 100px;font-weight: 500;height: 30px;;background-color:rgb(57,231,237) ;"
+                    value="Search">
+                    
+            </div>
+        </div>
+
+    </form>
+</div>
+<!-- <div style="display: flex;flex-direction: row;">
+    <div style="width: 50%; "></div>
+    <div style="width: 50%;"></div>
+    <div style="width: 25%;"></div>
+    
+</div> -->
