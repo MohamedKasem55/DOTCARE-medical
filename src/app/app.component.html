@@ -1,0 +1,19 @@
+<div>
+  <app-header-component></app-header-component>
+</div>
+<div class="contaianer"
+  style="z-index:1;position: relative;background-color: rgb(239,247,255); height: 690px;padding:40px 20px 0px 20px;  ">
+
+  <div>
+    <app-navbar-component (menuIsClickEvent)="onMenuClick($event)"></app-navbar-component>
+  </div>
+  <div style="margin-top: 25px;">
+    <router-outlet></router-outlet>
+  </div>
+  <div>
+    <app-footer-component></app-footer-component>
+  </div>
+  <div [class]="menuIsClicked? 'overlay':'d-none'">
+
+  </div>
+</div>
